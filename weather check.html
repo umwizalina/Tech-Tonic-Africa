@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather Activity Guide</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #c7d8f2;
+      color: #2a2a2a;
+      padding: 60px;
+    }
+
+    h2 {
+      font-size: 28px;
+      color: #490357;
+      margin-bottom: 25px;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      width: 240px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 10px 10px;
+      font-size: 16px;
+      margin-left: 5px;
+      background-color: #574207;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #130106;
+    }
+
+    #message {
+      margin-top: 30px;
+      padding: 16px;
+      font-size: 18px;
+      background-color: #ffffff;
+      border-left: 4px solid #513de4;
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+      display: inline-block;
+      max-width: 500px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Weather Activity Guide</h2>
+  <input type="text" id="weatherInput" placeholder="Enter weather (e.g., sunny)" />
+  <button onclick="checkWeather()">Check</button>
+
+  <div id="message">Enter a weather condition to get activity suggestions.</div>
+
+  <script>
+    function checkWeather() {
+      const input = document.getElementById("weatherInput").value.trim().toLowerCase();
+      const message = document.getElementById("message");
+
+      if (input === "sunny") {
+        message.textContent = "The sun is out. Great day to go to the beach, go swimming, or do anyother outdoor activities of your choice.";
+      } else if (input === "rainy") {
+        message.textContent = "There's rain today. A good time to read, watch a movie/TV show, play video games, or do anyother indoor activities of your choice.";
+      } else if (input === "cloudy") {
+        message.textContent = "Cloudy skies. You can play cards, do an indoor scavenger hunt, or paint/draw.";
+      } else if (input === "snowy") {
+        message.textContent = "Snowy grounds. Try skiing, building a snowman, or try skating.";
+      } else {
+        message.textContent = "Sorry, the condition you entered isn't recognized. Try sunny, rainy, cloudy, or snowy.";
+      }
+    }
+  </script>
+
+</body>
+</html>

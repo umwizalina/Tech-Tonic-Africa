@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🍎 Fruit Basket Counter</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #fefefe, #f0f0f0);
+      padding: 60px;
+      color: #333;
+      max-width: 500px;
+      margin: auto;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #2e7d32;
+    }
+    input {
+      padding: 8px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    #qtyInput {
+      width: 70px;
+    }
+    button {
+      padding: 8px 14px;
+      margin-right: 8px;
+      margin-top: 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      background: #4caf50;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #388e3c;
+    }
+    #output {
+      margin-top: 25px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+    .fruit-entry {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+    .total {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #1b5e20;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    document.body.innerHTML = `
+      <h2>🍎 Fruit Basket Counter</h2>
+      <input id="fruitInput" placeholder="Fruit name" />
+      <input id="qtyInput" type="number" value="1" min="1" />
+      <div>
+        <button onclick="addFruit()">Add</button>
+        <button onclick="removeFruit()">Remove</button>
+        <button onclick="showBasket()">Show</button>
+      </div>
+      <div id="output"></div>
+    `;
+
+    const fruitBasket = {};
+    const fruitEmojis = {
+      apple: "🍎", banana: "🍌", orange: "🍊", grape: "🍇",
+      watermelon: "🍉", pineapple: "🍍", lemon: "🍋", mango: "🥭",
+      pear: "🍐", peach: "🍑"
+    };
+
+    const fruitInput = document.getElementById("fruitInput");
+    const qtyInput = document.getElementById("qtyInput");
+    const output = document.getElementById("output");
+
+    function getFruitEmoji(fruit) {
+      return fruitEmojis[fruit] || "🍓";
+    }
+
+    function addFruit() {
+      const fruit = fruitInput.value.trim().toLowerCase();
+      const qty = parseInt(qtyInput.value);
+      if (!fruit) return showMessage("❗ Enter a fruit name.");
+      fruitBasket[fruit] = (fruitBasket[fruit] || 0) + qty;
+      showBasket();
+    }
+
+    function removeFruit() {
+      const fruit = fruitInput.value.trim().toLowerCase();
+      const qty = parseInt(qtyInput.value);
+      if (!fruitBasket[fruit]) return showMessage(`⚠️ No ${fruit} to remove.`);
+      if (fruitBasket[fruit] <= qty) {
+        delete fruitBasket[fruit];
+        showMessage(`🗑️ Removed all ${fruit}(s).`);
+      } else {
+        fruitBasket[fruit] -= qty;
+        showMessage(`➖ Removed ${qty} ${fruit}(s).`);
+      }
+      showBasket();
+    }
+
+    function showBasket() {
+      if (Object.keys(fruitBasket).length === 0) {
+        output.innerHTML = "<p>The basket is empty.</p>";
+        return;
+      }
+
+      let html = "<h3>🧺 Basket:</h3>";
+      let total = 0;
+      for (let fruit in fruitBasket) {
+        const emoji = getFruitEmoji(fruit);
+        html += `<div class="fruit-entry">${emoji} ${fruit}: ${fruitBasket[fruit]}</div>`;
+        total += fruitBasket[fruit];
+      }
+      html += `<div class="total">Total Fruits: ${total}</div>`;
+      output.innerHTML = html;
+    }
+
+    function showMessage(msg) {
+      output.innerHTML = `<p>${msg}</p>`;
+    }
+  </script>
+</body>
+</html>
